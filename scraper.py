@@ -102,6 +102,10 @@ for link in links:
     csvFile = link.text.strip()
     if '.csv' in link['href']:
         Mth = csvFile.split(' ')[0].strip()[:3]
+        if 'October to December' in csvFile:
+            Mth = 'Q4'
+        if 'July to September' in csvFile:
+            Mth = 'Q3'
         csvYr = csvFile.split(' ')
         if len(csvYr) == 4:
             csvYr = csvYr[-1].strip()[:5].strip()
