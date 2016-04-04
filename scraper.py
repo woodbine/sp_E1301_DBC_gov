@@ -84,7 +84,7 @@ def convert_mth_strings ( mth_string ):
 #### VARIABLES 1.0
 
 entity_id = "E1301_DBC_gov"
-url = "http://www.darlington.gov.uk/your-council/council-information/financial-information/spending-data/"
+url = "http://www.darlington.gov.uk/your-council/council-information/financial-information/spending-data.aspx"
 errors = 0
 data = []
 
@@ -112,7 +112,11 @@ for link in links:
         else:
             csvYr = csvYr[1].strip()[:5].strip()
         url = 'http://www.darlington.gov.uk' + link['href']
+        if 'December_2015.csv' in link['href']:
+            Mth = '12'
+            csvYr = '2015'
         csvMth = convert_mth_strings(Mth.upper())
+
         data.append([csvYr, csvMth, url])
 
 #### STORE DATA 1.0
