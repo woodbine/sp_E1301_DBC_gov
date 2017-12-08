@@ -96,8 +96,8 @@ soup = BeautifulSoup(html, 'lxml')
 
 #### SCRAPE DATA
 
-block = soup.find('section', attrs = {'id':'mainContent'})
-links = block.findAll('a', href=True)
+block = soup.find('main', attrs = {'id':'mainContent'})
+links = block.find_all('a', href=True)
 for link in links:
     csvFile = link.text.strip()
     if '.csv' in link['href']:
@@ -106,17 +106,16 @@ for link in links:
             Mth = 'Q4'
         if 'July to September' in csvFile:
             Mth = 'Q3'
-        csvYr = csvFile.split(' ')
-        if len(csvYr) == 4:
-            csvYr = csvYr[-1].strip()[:5].strip()
+        title = csvFile.split()
+        if len(title) == 5:
+            csvYr = title[-2].strip()[:4].strip()
         else:
-            csvYr = csvYr[1].strip()[:5].strip()
+            csvYr = title[1].strip()[:4].strip()
         url = 'http://www.darlington.gov.uk' + link['href']
         if 'December_2015.csv' in link['href']:
             Mth = '12'
             csvYr = '2015'
         csvMth = convert_mth_strings(Mth.upper())
-
         data.append([csvYr, csvMth, url])
 
 #### STORE DATA 1.0
